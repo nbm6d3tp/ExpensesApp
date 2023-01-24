@@ -3,7 +3,7 @@ import React from 'react';
 import ExpensesOutput from '../components/ExpensesOutput';
 
 const AllExpenses = () => {
-  return <ExpensesOutput />;
+  return <ExpensesOutput recent={false} />;
 };
 
 export default AllExpenses;

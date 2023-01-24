@@ -2,11 +2,11 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors} from '../constants/colors';
 
-const ExpensesHeader = ({title, total}) => {
+const ExpensesHeader = ({total}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Total</Text>
-      <Text style={styles.total}>Somme</Text>
+      <Text style={styles.total}>${total}</Text>
     </View>
   );
 };
@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    color: colors.primary400,
+    color: colors.primary800,
   },
   total: {
-    color: colors.primary400,
+    color: colors.primary800,
     fontWeight: 'bold',
   },
 });

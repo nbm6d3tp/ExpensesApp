@@ -1,24 +1,23 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {selectExpenses} from '../redux/expensesSlice';
 import ExpenseItem from './ExpenseItem';
 
-const ExpensesList = () => {
-  const expenses = useSelector(selectExpenses);
-
+const ExpensesList = ({expenses}) => {
   return (
-    <FlatList
-      data={expenses}
-      keyExtractor={expense => expense.id}
-      renderItem={expenseData => (
-        <ExpenseItem
-          description={expenseData.item.description}
-          amount={expenseData.item.amount}
-          date={expenseData.item.date}
-        />
-      )}
-    />
+    <View style={{paddingBottom: 15}}>
+      <FlatList
+        data={expenses}
+        keyExtractor={expense => expense.id}
+        renderItem={expenseData => (
+          <ExpenseItem
+            id={expenseData.item.id}
+            description={expenseData.item.description}
+            amount={expenseData.item.amount}
+            date={new Date(expenseData.item.date)}
+          />
+        )}
+      />
+    </View>
   );
 };
 

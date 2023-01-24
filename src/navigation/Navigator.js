@@ -6,6 +6,8 @@ import AllExpenses from '../screens/AllExpenses';
 import RecentExpenses from '../screens/RecentExpenses';
 import {Ionicons} from '@expo/vector-icons';
 import {Pressable} from 'react-native';
+import {colors} from '../constants/colors';
+import IconButton from '../components/IconButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -13,12 +15,27 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerRight: ({tintColor}) => (
-          <Pressable style={({pressed}) => (pressed ? {opacity: 0.5} : null)}>
-            <Ionicons name="add" size={24} color={tintColor} />
-          </Pressable>
-        ),
+      screenOptions={({navigation}) => {
+        return {
+          headerStyle: {
+            backgroundColor: colors.primary500,
+          },
+          headerTintColor: 'white',
+          headerRight: ({tintColor}) => (
+            <IconButton
+              style={{right: 10}}
+              onPress={() => {
+                navigation.navigate('ManageExpense', {action: 'add'});
+              }}
+              name="add"
+              size={30}
+              color={tintColor}
+            />
+          ),
+          tabBarStyle: {backgroundColor: colors.primary500},
+          tabBarActiveTintColor: colors.accent500,
+          tabBarInactiveTintColor: 'white',
+        };
       }}>
       <Tab.Screen
         options={{
@@ -34,7 +51,7 @@ const TabNavigator = () => {
       <Tab.Screen
         options={{
           title: 'All Expenses',
-          tabBarLabel: 'Recent',
+          tabBarLabel: 'All',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="calendar" size={size} color={color} />
           ),
@@ -49,12 +66,21 @@ const TabNavigator = () => {
 const Navigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="Expenses" component={TabNavigator} />
-        <Stack.Screen name="ManageExpense" component={ManageExpense} />
+      <Stack.Navigator screenOptions={{}}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Expenses"
+          component={TabNavigator}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: {backgroundColor: colors.primary500},
+            headerTintColor: 'white',
+            presentation: 'modal',
+          }}
+          name="ManageExpense"
+          component={ManageExpense}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

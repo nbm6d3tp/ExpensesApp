@@ -1,11 +1,16 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {colors} from '../constants/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const ExpenseItem = ({id, description, amount, date}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Pressable
+        onPress={() => {
+          navigation.navigate('ManageExpense', {action: 'modify', id: id});
+        }}
         android_ripple={{
           color: 'white',
         }}
@@ -17,7 +22,7 @@ const ExpenseItem = ({id, description, amount, date}) => {
           }/${date.getFullYear()}`}</Text>
         </View>
         <View style={styles.amountTextContainer}>
-          <Text style={styles.amountText}>{amount}</Text>
+          <Text style={styles.amountText}>${amount.toFixed(2)}</Text>
         </View>
       </Pressable>
     </View>
@@ -39,12 +44,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.primary500,
     padding: 10,
+    paddingLeft: 12,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  leftContainer: {},
-  descriptionText: {color: 'white', fontWeight: 'bold'},
-  dateText: {color: 'white'},
-  amountTextContainer: {},
-  amountText: {color: 'white'},
+  descriptionText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  dateText: {
+    color: 'white',
+    fontSize: 12,
+  },
+  amountTextContainer: {
+    backgroundColor: 'white',
+    minWidth: 60,
+    paddingVertical: 8,
+    borderRadius: 5,
+  },
+  amountText: {
+    color: colors.primary400,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 12,
+  },
 });
