@@ -65,17 +65,14 @@ export const expensesSlice = createSlice({
       state.push(action.payload);
     },
     modifyExpense: (state, action) => {
-      for (const expense of state) {
-        if (expense.id === action.payload.id) {
-          expense.description = action.payload.description;
-          expense.amount = action.payload.amount;
-          expense.date = action.payload.date;
-        }
-        break;
-      }
+      state[state.findIndex(expense => expense.id === action.payload.id)] =
+        action.payload;
     },
     deleteExpense: (state, action) => {
-      return state.filter(expense => expense.id != action.payload);
+      state.splice(
+        state.findIndex(expense => expense.id === action.payload),
+        1,
+      );
     },
   },
 });

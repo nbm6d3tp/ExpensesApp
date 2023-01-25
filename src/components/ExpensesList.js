@@ -4,8 +4,12 @@ import ExpenseItem from './ExpenseItem';
 
 const ExpensesList = ({expenses}) => {
   return (
-    <View style={{paddingBottom: 15}}>
+    <View
+      style={{
+        flex: 1,
+      }}>
       <FlatList
+        contentContainerStyle={{paddingBottom: 10}}
         data={expenses}
         keyExtractor={expense => expense.id}
         renderItem={expenseData => (

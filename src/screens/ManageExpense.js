@@ -25,7 +25,7 @@ const ManageExpense = () => {
         id: Math.random(),
         description: 'Test Add',
         amount: 89.29,
-        date: new Date('2023-01-24'),
+        date: '2023-01-24',
       }),
     );
     cancelHandler();
@@ -33,10 +33,10 @@ const ManageExpense = () => {
   const updateHandler = () => {
     dispatch(
       modifyExpense({
-        id: Math.random(),
+        id: id,
         description: 'Test Modify',
         amount: 22.29,
-        date: new Date('2023-01-01'),
+        date: '2023-01-01',
       }),
     );
     cancelHandler();
