@@ -25,7 +25,7 @@ const TabNavigator = () => {
             <IconButton
               style={{right: 10}}
               onPress={() => {
-                navigation.navigate('ManageExpense', {action: 'add'});
+                navigation.navigate('ManageExpense');
               }}
               name="add"
               size={30}

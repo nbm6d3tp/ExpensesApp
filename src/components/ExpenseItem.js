@@ -9,7 +9,7 @@ const ExpenseItem = ({id, description, amount, date}) => {
     <View style={styles.container}>
       <Pressable
         onPress={() => {
-          navigation.navigate('ManageExpense', {action: 'modify', id: id});
+          navigation.navigate('ManageExpense', {id: id});
         }}
         android_ripple={{
           color: 'white',

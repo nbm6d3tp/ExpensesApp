@@ -2,43 +2,29 @@ import {StyleSheet, View} from 'react-native';
 import React, {useLayoutEffect} from 'react';
 import {colors} from '../constants/colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import Button from '../components/Button';
 import * as NavigationBar from 'expo-navigation-bar';
 import IconButton from '../components/IconButton';
 import {addExpense, modifyExpense, deleteExpense} from '../redux/expensesSlice';
 import {useDispatch} from 'react-redux';
+import ExpenseForm from '../components/ExpenseForm';
 
 const ManageExpense = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const isAddMode = route.params.action === 'add';
-  const id = route.params.id;
+  const id = route.params?.id;
+  const isAddMode = id ? false : true;
   const dispatch = useDispatch();
 
   const deleteHandler = () => {
     dispatch(deleteExpense(id));
     cancelHandler();
   };
-  const addHandler = () => {
-    dispatch(
-      addExpense({
-        id: Math.random(),
-        description: 'Test Add',
-        amount: 89.29,
-        date: '2023-01-24',
-      }),
-    );
+  const addHandler = expense => {
+    dispatch(addExpense(expense));
     cancelHandler();
   };
-  const updateHandler = () => {
-    dispatch(
-      modifyExpense({
-        id: id,
-        description: 'Test Modify',
-        amount: 22.29,
-        date: '2023-01-01',
-      }),
-    );
+  const updateHandler = expense => {
+    dispatch(modifyExpense(expense));
     cancelHandler();
   };
   const cancelHandler = () => {
@@ -56,20 +42,12 @@ const ManageExpense = () => {
   }, [navigation, isAddMode]);
   return (
     <View style={styles.container}>
-      <View style={styles.buttonsContainer}>
-        <Button
-          style={styles.cancelButton}
-          title="Cancel"
-          color={colors.primary50}
-          onPress={cancelHandler}
-        />
-        <Button
-          style={styles.rightButton}
-          title={isAddMode ? 'Add' : 'Update'}
-          color={colors.primary800}
-          onPress={isAddMode ? addHandler : updateHandler}
-        />
-      </View>
+      <ExpenseForm
+        id={id}
+        titleSubmitButton={isAddMode ? 'Add' : 'Modify'}
+        onSubmit={isAddMode ? addHandler : updateHandler}
+        onCancel={cancelHandler}
+      />
       {!isAddMode ? (
         <IconButton
           name="trash"
@@ -90,18 +68,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary800,
     alignItems: 'center',
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    width: '90%',
-    alignItems: 'center',
-    padding: 20,
-    top: 10,
-    borderBottomColor: colors.primary50,
-    borderBottomWidth: 2,
-    marginBottom: 30,
-  },
-  cancelButton: {
-    backgroundColor: colors.primary800,
-  },
-  rightButton: {backgroundColor: colors.primary50},
 });
