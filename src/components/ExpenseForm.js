@@ -29,7 +29,6 @@ const ExpenseForm = ({id, titleSubmitButton, onSubmit, onCancel}) => {
   });
 
   const submitHandler = () => {
-    const submitedId = id ? id : Math.random();
     const description = inputs.description.value;
     const amount = parseFloat(inputs.amount.value);
     const valueYear = inputs.date.valueYear;
@@ -52,7 +51,6 @@ const ExpenseForm = ({id, titleSubmitButton, onSubmit, onCancel}) => {
     let isValid = isAmountValid && isDateValid && isDescriptionValid;
     if (isValid) {
       onSubmit({
-        id: submitedId,
         description: description,
         amount: amount,
         date: date,
@@ -80,7 +78,6 @@ const ExpenseForm = ({id, titleSubmitButton, onSubmit, onCancel}) => {
       );
     }
   };
-  console.log(inputs);
   return (
     <>
       <View style={styles.container}>
